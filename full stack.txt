@@ -1,0 +1,177 @@
+import re
+import spacy
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
+
+class AdvancedChatBot:
+    def _init_(self):
+        self.model_name = "gpt2"
+        self.model = GPT2LMHeadModel.from_pretrained(self.model_name)
+        self.tokenizer = GPT2Tokenizer.from_pretrained(self.model_name)
+        self.nlp = spacy.load("en_core_web_sm")
+        self.max_length = 150
+
+    def generate_response(self, user_input):
+        input_ids = self.tokenizer.encode(user_input, return_tensors="pt")
+
+        # Generate response
+        with self.model.no_grad():
+            output = self.model.generate(input_ids, max_length=self.max_length, num_beams=5, no_repeat_ngram_size=2, top_k=50, top_p=0.95)
+
+        response = self.tokenizer.decode(output[0], skip_special_tokens=True)
+        return response
+
+    def extract_intent(self, text):
+        # Simple intent recognition using regular expressions
+        if re.search(r"\b(?:hello|hi|hey)\b", text, re.IGNORECASE):
+            return "greeting"
+        elif re.search(r"\b(?:bye|goodbye)\b", text, re.IGNORECASE):
+            return "farewell"
+        else:
+            return "unknown"
+
+if _name_ == "_main_":
+    chatbot = AdvancedChatBot()
+
+    print("ChatBot: Hello! I'm an advanced chatbot. You can start chatting with me. Type 'exit' to end the conversation.")
+
+    while True:
+        user_input = input("You: ")
+        if user_input.lower() == 'exit':
+            print("ChatBot: Goodbye! Have a great day.")
+            break
+
+        intent = chatbot.extract_intent(user_input)
+        if intent == "greeting":
+            print("ChatBot: Hello! How can I help you?")
+        elif intent == "farewell":
+            print("ChatBot: Goodbye! Take care.")
+            break
+        else:
+            response = chatbot.generate_response(user_input)
+            print("ChatBot:", response)
+
+
+
+import re
+import spacy
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
+
+class PizzaOrderingBot:
+    def _init_(self):
+        self.model_name = "gpt2"
+        self.model = GPT2LMHeadModel.from_pretrained(self.model_name)
+        self.tokenizer = GPT2Tokenizer.from_pretrained(self.model_name)
+        self.nlp = spacy.load("en_core_web_sm")
+        self.max_length = 150
+
+    def generate_response(self, user_input):
+        input_ids = self.tokenizer.encode(user_input, return_tensors="pt")
+
+        # Generate response
+        with self.model.no_grad():
+            output = self.model.generate(input_ids, max_length=self.max_length, num_beams=5, no_repeat_ngram_size=2, top_k=50, top_p=0.95)
+
+        response = self.tokenizer.decode(output[0], skip_special_tokens=True)
+        return response
+
+    def extract_intent(self, text):
+        # Simple intent recognition using regular expressions
+        if re.search(r"\b(?:order|buy)\b.*\b(?:pizza)\b", text, re.IGNORECASE):
+            return "order_pizza"
+        elif re.search(r"\b(?:hello|hi|hey)\b", text, re.IGNORECASE):
+            return "greeting"
+        elif re.search(r"\b(?:bye|goodbye)\b", text, re.IGNORECASE):
+            return "farewell"
+        else:
+            return "unknown"
+
+    def process_order(self, user_input):
+        # Implement a simple pizza ordering system
+        response = "Sure! Let's get your pizza order. What size and toppings would you like?"
+        return response
+
+if _name_ == "_main_":
+    pizza_bot = PizzaOrderingBot()
+
+    print("PizzaBot: Hello! I'm your pizza ordering assistant. Type 'exit' to end the conversation.")
+
+    while True:
+        user_input = input("You: ")
+        if user_input.lower() == 'exit':
+            print("PizzaBot: Goodbye! Have a great day.")
+            break
+
+        intent = pizza_bot.extract_intent(user_input)
+        if intent == "order_pizza":
+            response = pizza_bot.process_order(user_input)
+        elif intent == "greeting":
+            response = "PizzaBot: Hello! How can I assist you today?"
+        elif intent == "farewell":
+            response = "PizzaBot: Goodbye! Take care."
+            break
+        else:
+            response = pizza_bot.generate_response(user_input)
+
+        print("PizzaBot:", response)
+
+import re
+import spacy
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
+
+class SalonAppointmentBot:
+    def _init_(self):
+        self.model_name = "gpt2"
+        self.model = GPT2LMHeadModel.from_pretrained(self.model_name)
+        self.tokenizer = GPT2Tokenizer.from_pretrained(self.model_name)
+        self.nlp = spacy.load("en_core_web_sm")
+        self.max_length = 150
+
+    def generate_response(self, user_input):
+        input_ids = self.tokenizer.encode(user_input, return_tensors="pt")
+
+        # Generate response
+        with self.model.no_grad():
+            output = self.model.generate(input_ids, max_length=self.max_length, num_beams=5, no_repeat_ngram_size=2, top_k=50, top_p=0.95)
+
+        response = self.tokenizer.decode(output[0], skip_special_tokens=True)
+        return response
+
+    def extract_intent(self, text):
+        # Simple intent recognition using regular expressions
+        if re.search(r"\b(?:book|schedule|make an appointment)\b.*\b(?:hair|salon)\b", text, re.IGNORECASE):
+            return "book_appointment"
+        elif re.search(r"\b(?:hello|hi|hey)\b", text, re.IGNORECASE):
+            return "greeting"
+        elif re.search(r"\b(?:bye|goodbye)\b", text, re.IGNORECASE):
+            return "farewell"
+        else:
+            return "unknown"
+
+    def process_appointment(self, user_input):
+        # Simulate a salon appointment system
+        response = "Sure! Let's schedule your salon appointment. What date and time would you prefer?"
+        return response
+
+if _name_ == "_main_":
+    salon_bot = SalonAppointmentBot()
+
+    print("SalonBot: Hello! I'm your hairstyling and salon appointment assistant. Type 'exit' to end the conversation.")
+
+    while True:
+        user_input = input("You: ")
+        if user_input.lower() == 'exit':
+            print("SalonBot: Goodbye! Have a great day.")
+            break
+
+        intent = salon_bot.extract_intent(user_input)
+        if intent == "book_appointment":
+            response = salon_bot.process_appointment(user_input)
+        elif intent == "greeting":
+            response = "SalonBot: Hello! How can I assist you today with your hairstyle and salon appointment?"
+        elif intent == "farewell":
+            response = "SalonBot: Goodbye! Take care."
+            break
+        else:
+            response = salon_bot.generate_response(user_input)
+
+        print("SalonBot:", response)
